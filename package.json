@@ -1,0 +1,44 @@
+{
+  "name": "casher-pos",
+  "version": "1.0.0",
+  "description": "برنامج كاشير لمحل قطع غيار عربيات وموتوسيكلات باللغة العربية",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && npm run electron:dev\"",
+    "build": "tsc && vite build && npm run electron:build",
+    "electron:dev": "tsc -p tsconfig.electron.json && electron .",
+    "electron:build": "tsc -p tsconfig.electron.json",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bwip-js": "^4.5.1",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "lucide-react": "^0.475.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "recharts": "^2.15.0",
+    "sql.js": "^1.12.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/bwip-js": "^3.2.3",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/sql.js": "^1.4.9",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.1",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "wait-on": "^8.0.1"
+  }
+}
