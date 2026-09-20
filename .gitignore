@@ -6,6 +6,7 @@ dist/
 dist-electron/
 out/
 build/
+release/
 
 # Local database & user data
 casher_data/

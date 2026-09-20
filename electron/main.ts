@@ -47,10 +47,10 @@ function createWindow() {
   });
 
   // Load dev server or production build
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = !app.isPackaged && process.env.NODE_ENV === 'development';
   const distPath = path.join(__dirname, '../dist/index.html');
 
-  if (!isDev && fs.existsSync(distPath)) {
+  if (app.isPackaged || (!isDev && fs.existsSync(distPath))) {
     mainWindow.loadFile(distPath);
   } else {
     mainWindow.loadURL('http://localhost:5173');

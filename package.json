@@ -10,6 +10,8 @@
     "electron:build": "tsc -p tsconfig.electron.json && xcopy /E /I /Y electron\\license\\keys dist-electron\\license\\keys",
     "start": "electron .",
     "build:protected": "node scripts/build-protected.js",
+    "build:exe": "node scripts/build-protected.js && electron-builder --win",
+    "dist": "node scripts/build-protected.js && electron-builder --win",
     "license:generate-keys": "npx ts-node tools/generate-keys.ts",
     "license:generate": "npx ts-node tools/generate-license.ts"
   },
@@ -38,6 +40,8 @@
     "concurrently": "^9.1.0",
     "cross-env": "^7.0.3",
     "electron": "^33.2.1",
+    "electron-builder": "^26.15.3",
+    "javascript-obfuscator": "^5.7.0",
     "postcss": "^8.5.28",
     "tailwindcss": "^4.3.3",
     "ts-node": "^10.9.2",

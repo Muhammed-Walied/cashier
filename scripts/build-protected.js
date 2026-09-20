@@ -40,9 +40,27 @@ async function build() {
       stdio: 'inherit', 
       cwd: path.join(__dirname, '..') 
     });
-    log('✅ تم ترجمة TypeScript بنجاح');
+    // Copy public.pem
+    const keysSrc = path.join(__dirname, '..', 'electron', 'license', 'keys');
+    const keysDest = path.join(DIST_ELECTRON, 'license', 'keys');
+    fs.mkdirSync(keysDest, { recursive: true });
+    if (fs.existsSync(path.join(keysSrc, 'public.pem'))) {
+      fs.copyFileSync(path.join(keysSrc, 'public.pem'), path.join(keysDest, 'public.pem'));
+      console.log('   ✅ تم نسخ المفتاح العام public.pem');
+    }
+
+    // Copy sql-wasm.wasm
+    const wasmSrc = path.join(__dirname, '..', 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
+    const wasmDest = path.join(DIST_ELECTRON, 'database');
+    fs.mkdirSync(wasmDest, { recursive: true });
+    if (fs.existsSync(wasmSrc)) {
+      fs.copyFileSync(wasmSrc, path.join(wasmDest, 'sql-wasm.wasm'));
+      console.log('   ✅ تم نسخ ملف sql-wasm.wasm');
+    }
+
+    log('✅ تم ترجمة TypeScript وتجهيز الملفات بنجاح');
   } catch (err) {
-    console.error('❌ فشل في ترجمة TypeScript');
+    console.error('❌ فشل في ترجمة TypeScript أو نسخ الملفات:', err);
     process.exit(1);
   }
 
