@@ -1,7 +1,5 @@
 @echo off
-chcp 65001 >nul
 title مولد تراخيص نظام الكاشير
-cls
-node tools\generate-license.cjs
-echo.
-pause
+cd /d "%~dp0"
+start "" npx electron tools/license-gui/main.js
+exit

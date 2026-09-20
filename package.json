@@ -13,7 +13,8 @@
     "build:exe": "node scripts/build-protected.js && electron-builder --win",
     "dist": "node scripts/build-protected.js && electron-builder --win",
     "license:generate-keys": "npx ts-node tools/generate-keys.ts",
-    "license:generate": "node tools/generate-license.cjs"
+    "license:generate": "node tools/generate-license.cjs",
+    "license:gui": "electron tools/license-gui/main.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

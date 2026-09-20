@@ -155,44 +155,43 @@ async function runInteractive() {
 
   const question = (query) => new Promise((resolve) => rl.question(query, resolve));
 
-  console.log('\n');
-  console.log('======================================================================');
-  console.log('   🔑 معالج توليد تراخيص برنامج الكاشير (POS Offline License)        ');
+  console.log('\n======================================================================');
+  console.log('   مولد تراخيص نظام الكاشير | POS Offline License Generator');
   console.log('======================================================================\n');
 
   const localHw = getLocalMachineId();
   if (localHw) {
-    console.log(`💡 للمعلومة: كود جهازك الحالي هو: [ ${localHw.short} ]`);
-    console.log(`   (إذا كنت تريد تجربة التفعيل على جهازك، اضغط Enter مباشرة عند طلب كود الجهاز)\n`);
+    console.log(`[*] كود جهازك الحالي | Local Machine ID: [ ${localHw.short} ]`);
+    console.log(`    (اضغط Enter لتجربة التفعيل على جهازك | Press Enter for local PC)\n`);
   }
 
-  let machineId = await question('1️⃣  أدخل كود جهاز العميل (أو اضغط Enter لاستخدام جهازك الحالي): ');
+  let machineId = await question('[1] كود جهاز العميل | Machine ID (Enter for this PC): ');
   machineId = machineId.trim();
 
   if (!machineId) {
     if (localHw) {
       machineId = localHw.full;
-      console.log(`   ✓ تم استخدام كود جهازك الحالي: ${localHw.short}`);
+      console.log(`    -> تم اختيار كود جهازك: ${localHw.short}`);
     } else {
-      console.error('❌ خطأ: يجب إدخال كود الجهاز.');
+      console.error('[-] خطأ: يجب إدخال كود الجهاز.');
       rl.close();
       process.exit(1);
     }
   }
 
-  let customer = await question('\n2️⃣  أدخل اسم العميل أو اسم المحل: ');
+  let customer = await question('\n[2] اسم العميل أو المحل | Customer / Store Name: ');
   customer = customer.trim();
   if (!customer) {
     customer = 'عميل تجريبي';
-    console.log(`   ✓ تم تعيين الاسم الافتراضي: ${customer}`);
+    console.log(`    -> الاسم الافتراضي: ${customer}`);
   }
 
-  let expires = await question('\n3️⃣  تاريخ الانتهاء YYYY-MM-DD (اضغط Enter لترخيص مدى الحياة ♾️): ');
+  let expires = await question('\n[3] تاريخ الانتهاء | Expiry (YYYY-MM-DD or Enter for Lifetime): ');
   expires = expires.trim();
   if (!expires) {
     expires = null;
   } else if (!/^\d{4}-\d{2}-\d{2}$/.test(expires)) {
-    console.log('⚠️  التاريخ المدخل غير صحيح، سيتم إنشاء ترخيص مدى الحياة.');
+    console.log('    -> تاريخ غير محدد، تم اعتماد ترخيص مدى الحياة.');
     expires = null;
   }
 

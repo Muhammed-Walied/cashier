@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مولد تراخيص نظام الكاشير</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at top right, #1e1538, #0f0f1a 60%);
+      color: #f0f0ff;
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      color: #c4b5fd;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* Card */
+    .card {
+      background: rgba(26, 26, 46, 0.85);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      margin-bottom: 18px;
+    }
+
+    /* Local Device Tip */
+    .tip-box {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .tip-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .tip-title {
+      color: #93c5fd;
+      font-weight: bold;
+    }
+    .tip-code {
+      font-family: monospace;
+      letter-spacing: 1px;
+      color: #fbbf24;
+      font-weight: bold;
+    }
+    .btn-small {
+      background: rgba(59, 130, 246, 0.25);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #bfdbfe;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-small:hover {
+      background: rgba(59, 130, 246, 0.4);
+      color: white;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      background: #12101f;
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input[type="text"]:focus, input[type="date"]:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    input::placeholder {
+      color: #64748b;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 14px;
+      margin-top: 6px;
+    }
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #e2e8f0;
+      cursor: pointer;
+    }
+    .radio-label input {
+      accent-color: #f59e0b;
+      cursor: pointer;
+    }
+
+    /* Submit button */
+    .btn-generate {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .btn-generate:hover {
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Result */
+    .result-card {
+      display: none;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 18px;
+      animation: fadeIn 0.3s ease;
+    }
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .result-title {
+      color: #34d399;
+      font-size: 13px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    textarea {
+      width: 100%;
+      height: 90px;
+      background: #090d16;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #a7f3d0;
+      resize: none;
+      outline: none;
+      direction: ltr;
+      margin-bottom: 10px;
+    }
+    .btn-copy {
+      background: #10b981;
+      color: #064e3b;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover {
+      background: #34d399;
+    }
+    .file-path {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 8px;
+      word-break: break-all;
+    }
+
+    .error-box {
+      display: none;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">🛡️ نظام الحماية الأوفلاين</div>
+      <h1>أداة توليد تراخيص الكاشير</h1>
+      <p class="subtitle">إنشاء مفاتيح تفعيل مشفرة بـ RSA-2048 غير قابلة للنقل أو التزييف</p>
+    </div>
+
+    <div class="card">
+      <!-- Tip: Local Machine ID -->
+      <div class="tip-box" id="localDeviceBox">
+        <div class="tip-info">
+          <span class="tip-title">🖥️ جهازك الحالي:</span>
+          <span class="tip-code" id="localDeviceCode">جاري القراءة...</span>
+        </div>
+        <button type="button" class="btn-small" id="btnUseLocal">استخدام كودي للتجربة</button>
+      </div>
+
+      <!-- Form -->
+      <form id="licenseForm">
+        <div class="form-group">
+          <label>كود جهاز العميل (Machine ID):</label>
+          <input type="text" id="machineIdInput" placeholder="الصق الكود هنا (مثال: A1B2-C3D4-E5F6-7890 أو الهاش الكامل)" required>
+        </div>
+
+        <div class="form-group">
+          <label>اسم العميل أو اسم المحل:</label>
+          <input type="text" id="customerInput" placeholder="مثال: محل قطع غيار الأمانة" required>
+        </div>
+
+        <div class="form-group">
+          <label>مدة صلاحية الترخيص:</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="expiryType" value="lifetime" checked id="radioLifetime">
+              مدى الحياة ♾️ (دائم)
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="expiryType" value="date" id="radioDate">
+              محدد بتاريخ انتهاء
+            </label>
+          </div>
+          <div id="dateContainer" style="display: none; margin-top: 8px;">
+            <input type="date" id="dateInput">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-generate" id="btnSubmit">
+          <span>🔑</span>
+          <span>توليد مفتاح الترخيص الآن</span>
+        </button>
+
+        <div class="error-box" id="errorBox"></div>
+      </form>
+    </div>
+
+    <!-- Result Card -->
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <span class="result-title">
+          <span>✅</span>
+          <span>تم توليد المفتاح بنجاح!</span>
+        </span>
+        <button type="button" class="btn-copy" id="btnCopy">
+          <span id="copyIcon">📋</span>
+          <span id="copyText">نسخ المفتاح</span>
+        </button>
+      </div>
+      <textarea id="licenseOutput" readonly></textarea>
+      <div class="file-path" id="filePathInfo"></div>
+    </div>
+  </div>
+
+  <script>
+    let localFullHash = '';
+    let localShortCode = '';
+
+    // 1. Fetch Local Device ID on startup
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        if (window.licenseAPI?.getLocalMachineId) {
+          const hw = await window.licenseAPI.getLocalMachineId();
+          if (hw) {
+            localShortCode = hw.short;
+            localFullHash = hw.full;
+            document.getElementById('localDeviceCode').textContent = hw.short;
+          } else {
+            document.getElementById('localDeviceBox').style.display = 'none';
+          }
+        }
+      } catch {
+        document.getElementById('localDeviceBox').style.display = 'none';
+      }
+    });
+
+    // Use Local Machine Button
+    document.getElementById('btnUseLocal').addEventListener('click', () => {
+      document.getElementById('machineIdInput').value = localFullHash || localShortCode;
+      if (!document.getElementById('customerInput').value) {
+        document.getElementById('customerInput').value = 'تجربة شخصية على جهازي';
+      }
+    });
+
+    // Toggle Expiry Date input
+    document.getElementById('radioLifetime').addEventListener('change', () => {
+      document.getElementById('dateContainer').style.display = 'none';
+    });
+    document.getElementById('radioDate').addEventListener('change', () => {
+      document.getElementById('dateContainer').style.display = 'block';
+    });
+
+    // Form Submit
+    document.getElementById('licenseForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const machineId = document.getElementById('machineIdInput').value.trim();
+      const customer = document.getElementById('customerInput').value.trim();
+      const isLifetime = document.getElementById('radioLifetime').checked;
+      const dateVal = document.getElementById('dateInput').value;
+
+      const errorBox = document.getElementById('errorBox');
+      const resultCard = document.getElementById('resultCard');
+      errorBox.style.display = 'none';
+      resultCard.style.display = 'none';
+
+      let expires = null;
+      if (!isLifetime) {
+        if (!dateVal) {
+          errorBox.textContent = 'يرجى تحديد تاريخ انتهاء الترخيص';
+          errorBox.style.display = 'block';
+          return;
+        }
+        expires = dateVal;
+      }
+
+      const res = await window.licenseAPI.generateLicense({ machineId, customer, expires });
+
+      if (!res.success) {
+        errorBox.textContent = res.error;
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      // Display result
+      document.getElementById('licenseOutput').value = res.licenseKey;
+      document.getElementById('filePathInfo').textContent = `💾 تم حفظ نسخة في: ${res.savedPath}`;
+      resultCard.style.display = 'block';
+      resultCard.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Copy to clipboard
+    document.getElementById('btnCopy').addEventListener('click', async () => {
+      const key = document.getElementById('licenseOutput').value;
+      await navigator.clipboard.writeText(key);
+      const copyText = document.getElementById('copyText');
+      copyText.textContent = 'تم النسخ بنجاح!';
+      setTimeout(() => {
+        copyText.textContent = 'نسخ المفتاح';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
