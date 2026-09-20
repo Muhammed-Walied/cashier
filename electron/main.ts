@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import { initializeSchema } from './database/schema';
@@ -30,6 +30,7 @@ function createWindow() {
     show: true,
     center: true,
     title: 'برنامج كاشير قطع الغيار',
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -37,6 +38,10 @@ function createWindow() {
       webSecurity: false,
     },
   });
+
+  // إزالة شريط القوائم الافتراضي (File/Edit/View) بالكامل لمظهر كاشير احترافي ونظيف
+  mainWindow.setMenu(null);
+  Menu.setApplicationMenu(null);
 
   mainWindow.webContents.on('did-fail-load', (_e, code, desc, url) => {
     console.error('Failed to load:', code, desc, url);
@@ -144,6 +149,7 @@ function setupIpcHandlers() {
 }
 
 app.whenReady().then(async () => {
+  Menu.setApplicationMenu(null);
   try {
     await initializeSchema();
     setupIpcHandlers();
