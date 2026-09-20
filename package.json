@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && npm run electron:dev\"",
     "build": "tsc && vite build && npm run electron:build",
-    "electron:dev": "tsc -p tsconfig.electron.json && electron .",
-    "electron:build": "tsc -p tsconfig.electron.json",
-    "start": "electron ."
+    "electron:dev": "cross-env NODE_ENV=development tsc -p tsconfig.electron.json && xcopy /E /I /Y electron\\license\\keys dist-electron\\license\\keys && electron .",
+    "electron:build": "tsc -p tsconfig.electron.json && xcopy /E /I /Y electron\\license\\keys dist-electron\\license\\keys",
+    "start": "electron .",
+    "build:protected": "node scripts/build-protected.js",
+    "license:generate-keys": "npx ts-node tools/generate-keys.ts",
+    "license:generate": "npx ts-node tools/generate-license.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -37,6 +40,7 @@
     "electron": "^33.2.1",
     "postcss": "^8.5.28",
     "tailwindcss": "^4.3.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.3",
     "wait-on": "^8.0.1"

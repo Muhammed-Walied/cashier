@@ -10,6 +10,8 @@ import * as reportsService from './services/reports';
 import * as settingsService from './services/settings';
 import * as barcodePrinter from './printer/barcode';
 import * as receiptPrinter from './printer/receipt';
+import { getMachineId, getMachineIdFull } from './license/hwid';
+import { validateLicense, activateLicense, getLicenseInfo } from './license/license-manager';
 
 // Disable hardware acceleration to avoid Windows GPU cache locks and display issues
 app.disableHardwareAcceleration();
@@ -65,7 +67,29 @@ function createWindow() {
 }
 
 function setupIpcHandlers() {
-  // Auth & Users
+  // ─── License ───
+  ipcMain.handle('license:get-machine-id', async () => {
+    return getMachineId();
+  });
+
+  ipcMain.handle('license:get-machine-id-full', async () => {
+    return getMachineIdFull();
+  });
+
+  ipcMain.handle('license:get-status', async () => {
+    const result = await validateLicense();
+    return result;
+  });
+
+  ipcMain.handle('license:activate', async (_e, key: string) => {
+    return activateLicense(key);
+  });
+
+  ipcMain.handle('license:get-info', async () => {
+    return getLicenseInfo();
+  });
+
+  // ─── Auth & Users ───
   ipcMain.handle('auth:login', async (_e, { username, password }) => {
     return usersService.loginUser(username, password);
   });

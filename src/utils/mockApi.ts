@@ -411,6 +411,13 @@ export function setupBrowserMockApi() {
       window.print();
       return { success: true, data: true };
     },
+
+    // License (mock - always valid in browser)
+    getMachineId: async () => 'MOCK-XXXX-XXXX-XXXX',
+    getMachineIdFull: async () => 'mock_machine_id_for_browser_development',
+    getLicenseStatus: async () => ({ status: 'valid' }),
+    activateLicense: async () => ({ success: true, message: 'تم التفعيل (وضع التطوير)' }),
+    getLicenseInfo: async () => null,
   };
 
   window.electronAPI = mockApi;

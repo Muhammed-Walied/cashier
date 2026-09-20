@@ -24,6 +24,12 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# License private keys (NEVER commit!)
+tools/keys/
+*.pem
+!electron/license/keys/public.pem
+license.key
+
 # IDE & Editor files
 .vscode/
 .idea/

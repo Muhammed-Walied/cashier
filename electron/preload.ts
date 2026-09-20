@@ -1,6 +1,13 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electronAPI', {
+  // License
+  getMachineId: () => ipcRenderer.invoke('license:get-machine-id'),
+  getMachineIdFull: () => ipcRenderer.invoke('license:get-machine-id-full'),
+  getLicenseStatus: () => ipcRenderer.invoke('license:get-status'),
+  activateLicense: (key: string) => ipcRenderer.invoke('license:activate', key),
+  getLicenseInfo: () => ipcRenderer.invoke('license:get-info'),
+
   // Auth & Users
   login: (credentials: any) => ipcRenderer.invoke('auth:login', credentials),
   getUsers: () => ipcRenderer.invoke('users:get-all'),

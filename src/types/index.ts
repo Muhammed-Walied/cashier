@@ -78,6 +78,13 @@ export interface ElectronAPI {
   generateBarcodeDataUrl: (text: string, type?: string) => Promise<ApiResponse<string>>;
   printReceipt: (invoiceId: number) => Promise<ApiResponse<boolean>>;
   printBarcodeLabel: (product: Product, count: number) => Promise<ApiResponse<boolean>>;
+
+  // License
+  getMachineId: () => Promise<string>;
+  getMachineIdFull: () => Promise<string>;
+  getLicenseStatus: () => Promise<{ status: string; info?: any }>;
+  activateLicense: (key: string) => Promise<{ success: boolean; message: string }>;
+  getLicenseInfo: () => Promise<any>;
 }
 
 declare global {
