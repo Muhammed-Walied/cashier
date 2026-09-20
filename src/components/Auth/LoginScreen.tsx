@@ -52,103 +52,117 @@ export const LoginScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center p-4 relative overflow-hidden select-none font-cairo">
-      {/* Animated Background Orbs */}
-      <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[160px] pointer-events-none animate-float" />
-      <div className="absolute bottom-1/4 -left-24 w-[450px] h-[450px] rounded-full bg-blue-600/12 blur-[140px] pointer-events-none animate-float-slow" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-[#090b14] flex items-center justify-center p-4 relative overflow-hidden select-none font-cairo" dir="rtl">
+      {/* Ambient background glows */}
+      <div className="absolute -top-32 right-1/4 w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[140px] pointer-events-none" />
+      <div className="absolute -bottom-32 left-1/4 w-[500px] h-[500px] rounded-full bg-purple-600/10 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-blue-600/5 blur-[120px] pointer-events-none" />
 
-      <div className="w-full max-w-md relative z-10">
-        {/* Card with glass effect and gradient border */}
-        <div className="bg-[rgba(26,26,46,0.85)] backdrop-blur-2xl p-8 rounded-3xl border border-[rgba(124,58,237,0.2)] shadow-2xl shadow-purple-900/20 relative overflow-hidden">
-          {/* Top gradient line */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-pink-500/30" />
+      {/* Main Login Card */}
+      <div className="w-full max-w-[430px] relative z-10">
+        <div className="bg-[#121526]/95 backdrop-blur-2xl p-7 sm:p-8 rounded-3xl border border-indigo-500/20 shadow-2xl shadow-black/70 relative overflow-hidden">
+          {/* Top highlight bar */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-75" />
 
-          {/* Header Icon & Brand */}
-          <div className="text-center mb-7">
-            <div className="w-[72px] h-[72px] rounded-2xl bg-gradient-to-tr from-purple-600 via-purple-500 to-pink-500 mx-auto flex items-center justify-center shadow-xl shadow-purple-500/30 mb-4 border border-white/20 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent" />
-              <Wrench className="w-9 h-9 text-white stroke-[2.2] relative z-10" />
+          {/* Header Brand */}
+          <div className="flex flex-col items-center text-center mb-6">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-600/30 border border-white/20 mb-3.5">
+              <Wrench className="w-8 h-8 text-white stroke-[2.2]" />
             </div>
-            <h1 className="text-2xl font-black text-gradient-primary tracking-tight">كاشير قطع الغيار</h1>
-            <p className="text-xs text-[#a8a8c8] mt-1.5 font-medium">
-              منظومة كاشير ومبيعات ومخازن سيارات وموتوسيكلات
+            <h1 className="text-2xl font-black text-white tracking-tight">كاشير قطع الغيار</h1>
+            <p className="text-xs text-slate-400 mt-1 font-medium">
+              منظومة مبيعات ومخازن قطع غيار السيارات والموتوسيكلات
             </p>
           </div>
 
           {/* Error Alert */}
           {errorMsg && (
-            <div className="mb-5 p-3 rounded-xl bg-[rgba(255,107,107,0.1)] border border-[rgba(255,107,107,0.25)] text-[#ff8a8a] text-xs font-bold flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 text-[#ff6b6b]" />
+            <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs font-bold flex items-center gap-2 animate-fade-in">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-400" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          {/* Form */}
+          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="text-xs font-bold text-[#a8a8c8] block mb-1.5">اسم المستخدم</label>
-              <div className="relative">
-                <User className="w-4 h-4 text-[#5a5a80] absolute right-3.5 top-3.5" />
+            {/* Username Field */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300 block">
+                اسم المستخدم
+              </label>
+              <div className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#0a0d1c] border border-[#232844] focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
+                <User className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+                <div className="w-[1px] h-4 bg-[#232844] flex-shrink-0" />
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="اسم المستخدم (admin أو cashier)"
-                  className="input-dark pr-10 text-xs !py-3"
+                  className="w-full bg-transparent text-white text-xs outline-none placeholder:text-slate-500 font-medium"
                   autoFocus
                 />
               </div>
             </div>
 
-            <div>
-              <label className="text-xs font-bold text-[#a8a8c8] block mb-1.5">كلمة المرور</label>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-[#5a5a80] absolute right-3.5 top-3.5" />
+            {/* Password Field */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300 block">
+                كلمة المرور
+              </label>
+              <div className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#0a0d1c] border border-[#232844] focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
+                <Lock className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+                <div className="w-[1px] h-4 bg-[#232844] flex-shrink-0" />
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="كلمة المرور"
-                  className="input-dark pr-10 text-xs !py-3"
+                  placeholder="كلمة المرور..."
+                  className="w-full bg-transparent text-white text-xs outline-none placeholder:text-slate-500 font-medium"
                 />
               </div>
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="btn-primary w-full !py-3.5 text-sm font-bold mt-2"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 active:scale-[0.99] text-white font-bold text-xs shadow-lg shadow-indigo-600/30 border border-indigo-400/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
             >
               <LogIn className="w-4 h-4" />
-              {isLoading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول إلى النظام'}
+              <span>{isLoading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول إلى النظام'}</span>
             </button>
           </form>
 
-          {/* Fast Credentials Buttons */}
-          <div className="mt-8 pt-5 border-t border-[rgba(124,58,237,0.12)]">
-            <span className="text-[11px] text-[#7878a0] font-semibold block text-center mb-3 flex items-center justify-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#ff9f43]" />
-              دخول فوري بضغطة زر للتجربة:
-            </span>
+          {/* Quick Demo Access */}
+          <div className="mt-6 pt-5 border-t border-[#232844]">
+            <div className="flex items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-400 mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>دخول سريع للتجربة بضغطة زر واحدة:</span>
+            </div>
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => handleQuickLogin('admin', 'admin123')}
-                className="py-2.5 px-3 rounded-xl bg-[rgba(34,34,68,0.6)] hover:bg-[rgba(42,42,74,0.8)] border border-[rgba(124,58,237,0.15)] text-[#f0f0ff] text-xs font-bold text-center transition-all hover:border-purple-500/40 hover:shadow-glow-purple/20 flex items-center justify-center gap-1.5"
+                className="p-2.5 rounded-xl bg-[#171b33] hover:bg-[#1f2444] border border-indigo-500/20 hover:border-indigo-500/40 text-right transition-all group flex flex-col gap-0.5 cursor-pointer"
               >
-                <Shield className="w-3.5 h-3.5 text-purple-400" />
-                المدير (admin)
+                <div className="flex items-center gap-1.5">
+                  <Shield className="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" />
+                  <span className="text-xs font-bold text-white group-hover:text-indigo-300">المدير (admin)</span>
+                </div>
+                <span className="text-[10px] text-slate-400">صلاحيات كاملة للنظام</span>
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('cashier', '123456')}
-                className="py-2.5 px-3 rounded-xl bg-[rgba(34,34,68,0.6)] hover:bg-[rgba(42,42,74,0.8)] border border-[rgba(6,214,160,0.15)] text-[#f0f0ff] text-xs font-bold text-center transition-all hover:border-teal-500/40 flex items-center justify-center gap-1.5"
+                className="p-2.5 rounded-xl bg-[#171b33] hover:bg-[#1f2444] border border-emerald-500/20 hover:border-emerald-500/40 text-right transition-all group flex flex-col gap-0.5 cursor-pointer"
               >
-                <User className="w-3.5 h-3.5 text-teal-400" />
-                كاشير (cashier)
+                <div className="flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <span className="text-xs font-bold text-white group-hover:text-emerald-300">كاشير (cashier)</span>
+                </div>
+                <span className="text-[10px] text-slate-400">نقطة البيع والفواتير</span>
               </button>
             </div>
           </div>

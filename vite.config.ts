@@ -14,9 +14,13 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    watch: {
+      ignored: ['**/release/**', '**/dist-electron/**', '**/casher_data/**', '**/*.log', '**/node_modules/**'],
+    },
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
   },
 });
+

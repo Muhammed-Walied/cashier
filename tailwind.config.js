@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        cairo: ['Cairo', 'sans-serif'],
+        cairo: ['Cairo', 'Segoe UI Arabic', 'Segoe UI', 'Tahoma', 'sans-serif'],
       },
       colors: {
         brand: {
