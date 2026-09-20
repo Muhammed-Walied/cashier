@@ -134,7 +134,9 @@ export async function validateLicense(): Promise<{ status: LicenseStatus; info?:
 
   // 4. Verify machine ID
   const currentMachineId = await getMachineIdFull();
-  const machineMatch = payload.machineId === currentMachineId;
+  const cleanPayloadId = (payload.machineId || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  const cleanCurrentId = currentMachineId.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  const machineMatch = cleanPayloadId === cleanCurrentId || (cleanPayloadId.length >= 16 && cleanCurrentId.startsWith(cleanPayloadId));
 
   if (!machineMatch) {
     return {
@@ -206,8 +208,11 @@ export async function activateLicense(licenseKey: string): Promise<{ success: bo
 
   // 3. Verify machine ID
   const currentMachineId = await getMachineIdFull();
+  const cleanPayloadId = (payload.machineId || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  const cleanCurrentId = currentMachineId.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  const machineMatch = cleanPayloadId === cleanCurrentId || (cleanPayloadId.length >= 16 && cleanCurrentId.startsWith(cleanPayloadId));
 
-  if (payload.machineId !== currentMachineId) {
+  if (!machineMatch) {
     return { success: false, message: 'مفتاح التفعيل مخصص لجهاز آخر. تواصل مع الدعم الفني.' };
   }
 

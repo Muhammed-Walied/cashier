@@ -30,6 +30,8 @@ tools/keys/
 *.pem
 !electron/license/keys/public.pem
 license.key
+license_output.txt
+licenses/
 
 # IDE & Editor files
 .vscode/
